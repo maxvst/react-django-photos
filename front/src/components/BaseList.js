@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import List from '../containers/ListContainer'
+import List from '../containers/List'
 
 const mapStateToProps = state => ({
     baseList: state.bases.response.result

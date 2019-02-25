@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import BaseList from '../components/BaseListComponent';
+import BaseList from '../components/BaseList';
 import BaseListFilter from '../components/BaseListFilter';
 import queryString from 'query-string';
 import { getBases, getBasesSuccess, getBasesError } from '../actions/BasesActions';
@@ -38,7 +38,6 @@ class BaseListPage extends React.Component {
     }
     
     render() {
-        // console.log ('this base list page', this);
         return (
             <div>
                 <BaseListFilter history={this.props.history}></BaseListFilter>

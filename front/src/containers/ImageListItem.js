@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default class ImageListItemContainer extends React.Component {
+export default class ImageListItem extends React.Component {
     render() {
         // TODO: ссылки не должны быть зашиты в компоненте.
         // Логику составления, ссыдки нужно вынести из компоненты.
