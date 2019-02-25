@@ -16,6 +16,7 @@ class BaseListPage extends React.Component {
         this.updateDataAccordingToURL(this.props);
     }
 
+    // TODO: Вынести логику составления URL в отдельый модуль.
     navigateToBase = (base) => {
         this.props.history.push(`/base/${base.id}`);
     }

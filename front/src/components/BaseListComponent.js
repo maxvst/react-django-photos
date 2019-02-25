@@ -1,24 +1,5 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import ListItemContainer from '../containers/ListItemContainer'
-
-class BaseList extends React.Component {    
-    render() {
-        return (
-            <div>
-                { this.props.baseList.map(
-                    base => (
-                        <ListItemContainer 
-                            key={base.id} 
-                            base={base}
-                            onClick={this.props.navigateTo}
-                        ></ListItemContainer>
-                    )
-                )}
-            </div>
-        );
-    }
-}
+import { connect } from 'react-redux';
+import List from '../containers/ListContainer'
 
 const mapStateToProps = state => ({
     baseList: state.bases.response.result
@@ -29,4 +10,4 @@ const mapDispatchToProps = dispatch => ({
     // decrement: () => dispatch(decrement()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(BaseList)
+export default connect(mapStateToProps, mapDispatchToProps)(List)
