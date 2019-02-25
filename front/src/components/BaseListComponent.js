@@ -1,22 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import BaseListItemContainer from '../containers/BaseListItemContainer'
+import ListItemContainer from '../containers/ListItemContainer'
 
-class BaseList extends React.Component {
-    // handleBaseClick(base) {
-    //     console.log ('on base clicked', base);
-    // }
-    
+class BaseList extends React.Component {    
     render() {
         return (
             <div>
                 { this.props.baseList.map(
                     base => (
-                        <BaseListItemContainer 
+                        <ListItemContainer 
                             key={base.id} 
                             base={base}
                             onClick={this.props.navigateTo}
-                        ></BaseListItemContainer>
+                        ></ListItemContainer>
                     )
                 )}
             </div>
