@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import BaseListItemContainer from '../containers/BaseListItemContainer'
 
 class BaseList extends React.Component {
-    handleBaseClick(base) {
-        console.log ('on base clicked', base);
-    }
+    // handleBaseClick(base) {
+    //     console.log ('on base clicked', base);
+    // }
     
     render() {
         return (
@@ -15,7 +15,7 @@ class BaseList extends React.Component {
                         <BaseListItemContainer 
                             key={base.id} 
                             base={base}
-                            onClick={this.handleBaseClick}
+                            onClick={this.props.navigateTo}
                         ></BaseListItemContainer>
                     )
                 )}

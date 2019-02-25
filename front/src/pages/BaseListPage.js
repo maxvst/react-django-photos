@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import BaseList from '../components/BaseList.js';
+import BaseList from '../components/BaseListComponent';
 import BaseListFilter from '../components/BaseListFilter';
 import queryString from 'query-string';
 import { getBases, getBasesSuccess, getBasesError } from '../actions/BasesActions';
@@ -14,6 +14,10 @@ class BaseListPage extends React.Component {
 
     componentWillMount() {
         this.updateDataAccordingToURL(this.props);
+    }
+
+    navigateToBase = (base) => {
+        this.props.history.push(`/base/${base.id}`);
     }
 
     updateDataAccordingToURL(props) {
@@ -37,7 +41,9 @@ class BaseListPage extends React.Component {
         return (
             <div>
                 <BaseListFilter history={this.props.history}></BaseListFilter>
-                <BaseList></BaseList>
+                <BaseList
+                    navigateTo={this.navigateToBase}
+                ></BaseList>
             </div>
         );
     }
