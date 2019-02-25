@@ -5,7 +5,7 @@ export default class BaseList extends React.Component {
     render() {
         return (
             <div>
-                { this.props.baseList.map(
+                { this.props.list.map(
                     base => (
                         <ListItem
                             key={base.id} 

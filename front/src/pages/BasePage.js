@@ -2,7 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
 import { getBase, getBaseSuccess, getBaseError } from '../actions/BaseActions';
-import ImageList from '../components/BaseImageList';
+import BaseImageList from '../components/BaseImageList';
 import ImageListFilter from '../components/ImageListFilter';
 
 class BasePage extends React.Component {
@@ -16,6 +16,7 @@ class BasePage extends React.Component {
         this.updateDataAccordingToURL(this.props);
     }
 
+    // TODO: Вынести логику составления URL в отдельый модуль.
     navigateToImage = (image) => {
         this.props.history.push(`/image/${image.id}`);
     }
@@ -44,9 +45,9 @@ class BasePage extends React.Component {
             <div>
                 База: { params.id }
                 <ImageListFilter baseId={params.id} history={this.props.history}></ImageListFilter>
-                <ImageList
+                <BaseImageList
                     navigateTo={this.navigateToImage}
-                ></ImageList>
+                ></BaseImageList>
             </div>
         );
     }
@@ -77,4 +78,3 @@ const mapDispatchToProps = (dispatch) => {
 }
   
 export default connect(mapStateToProps, mapDispatchToProps)(BasePage);
-
