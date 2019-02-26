@@ -18,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-      <HashRouter>
+        <HashRouter>
           <div>
               <Link to={'/'}>Home</Link>
               <Link to={'/test'}>Test</Link>
@@ -27,8 +27,8 @@ class App extends Component {
               <Route path="/base/:id" component={BasePage} />
               <Route path="/image/:id" component={ImagePage} />
           </div>
-      </HashRouter >
-  </Provider>
+        </HashRouter >
+      </Provider>
   );
   }
 }
