@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import List from '../containers/List'
 
 const mapStateToProps = state => ({
-    list: state.bases.response.result
+    list: state.baseList.response.result
 })
 
 const mapDispatchToProps = dispatch => ({

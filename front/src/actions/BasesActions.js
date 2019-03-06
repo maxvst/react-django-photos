@@ -17,7 +17,7 @@ export function getBases(query) {
     }
     const promise = axios({
         method: 'get',
-        url: `${ROOT_URL}/base`,
+        url: `${ROOT_URL}/bases`,
         params,
     });
 

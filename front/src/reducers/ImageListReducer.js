@@ -1,10 +1,8 @@
-import { GET_BASE, GET_BASE_SUCCESS, GET_BASE_ERROR } from '../actions/BaseActions';
+import { GET_IMAGE_LIST, GET_IMAGE_LIST_SUCCESS, GET_IMAGE_LIST_ERROR } from '../actions/ImageListActions';
 
 const INITIAL_RESPONSE = {
-    id: null,
-    title: null,
-//    result: [],
-//    total: 0,
+    result: [],
+    total: 0,
 }
 
 const INITIAL_STATE = {
@@ -19,11 +17,11 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
     switch(action.type) {
-        case GET_BASE:
+        case GET_IMAGE_LIST:
             return { ...state, loading: true, request: action.payload }; 
-        case GET_BASE_SUCCESS:
+        case GET_IMAGE_LIST_SUCCESS:
             return { ...state, loading: false, response: action.payload, error: null };
-        case GET_BASE_ERROR:
+        case GET_IMAGE_LIST_ERROR:
             return { ...state, loading: false, error: action.payload, response: INITIAL_RESPONSE };
 
         default:

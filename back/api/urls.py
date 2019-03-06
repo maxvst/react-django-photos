@@ -5,7 +5,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('base', views.bases, name='bases'),
-    url(r'base/(?P<id>.+)', views.base, name='base'),
-    url(r'image/(?P<id>.+)', views.image, name='image')
+    url(r'bases/(?P<id>.+)', views.base, name='base'),
+    path('bases', views.bases, name='bases'),
+    url(r'images/(?P<id>.+)', views.image, name='image'),
+    url(r'images', views.images, name='images'),
 ]

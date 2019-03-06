@@ -2,6 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
 import { getBase, getBaseSuccess, getBaseError } from '../actions/BaseActions';
+import { getImageList, getImageListSuccess, getImageListError } from '../actions/ImageListActions';
 import BaseImageList from '../components/BaseImageList';
 import ImageListFilter from '../components/ImageListFilter';
 
@@ -10,10 +11,12 @@ class BasePage extends React.Component {
     // следует именно в методах componentWillReceiveProps и componentWillMount
     componentWillReceiveProps(newProps) {
         this.updateDataAccordingToURL(newProps);
+        // console.log ('eee');
     }
 
     componentWillMount() {
         this.updateDataAccordingToURL(this.props);
+        // console.log ('bbb');
     }
 
     // TODO: Вынести логику составления URL в отдельый модуль.
@@ -40,10 +43,13 @@ class BasePage extends React.Component {
     }
     
     render() {
+        // console.log ('props: ', this.props);
         let params = this.props.match.params;
+        // let base = this.props.base;
+        // TODO: доавить виджет отображения информации о базе
         return (
             <div>
-                База: { params.id }
+                {/* База: { base.id } - { base.name } */}
                 <ImageListFilter baseId={params.id} history={this.props.history}></ImageListFilter>
                 <BaseImageList
                     navigateTo={this.navigateToImage}
@@ -54,8 +60,9 @@ class BasePage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { 
-        basesPage: state.basePage
+    return {
+        // base: state.base.response
+        // basesPage: state.basePage
     };
 }
   
@@ -73,6 +80,17 @@ const mapDispatchToProps = (dispatch) => {
                     dispatch(getBaseError(error.response));
                 }
             );
+            dispatch(getImageList(query)).payload.promise.then(
+                (response) => {
+                    !response.error ? 
+                        dispatch(getImageListSuccess(response.data)) : 
+                        dispatch(getImageListError(response.error));
+                },
+                (error) => {
+                    dispatch(getImageListError(error.response));
+                }
+            );
+
         }
     }
 }

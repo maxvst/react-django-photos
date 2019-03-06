@@ -10,14 +10,17 @@ class Image extends React.Component {
     
     render() {
         const image = this.props.image;
+        // TODO: вынести составление URL картинки в соответствующий модуль
         return (
             <div>
                 <h1> Название: { image.title } </h1>
                 <h2> База: { image.base } </h2>
-                <img
-                    src={`data:image/jpeg;base64,${image.image}`}
-                    alt={image.title}
-                ></img>
+                { image.id && 
+                    <img
+                        src={`/api/images/${image.id}?target=native`}
+                        alt={image.title}
+                    ></img>
+                }
             </div>
         );
     }

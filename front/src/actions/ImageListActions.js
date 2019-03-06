@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export const GET_BASE = '[Base] Get';
-export const GET_BASE_SUCCESS = '[Base] Get Success';
-export const GET_BASE_ERROR = '[Base] Get Error';
+export const GET_IMAGE_LIST = '[Image List] Get';
+export const GET_IMAGE_LIST_SUCCESS = '[Image List] Get Success';
+export const GET_IMAGE_LIST_ERROR = '[Image List] Get Error';
 
 // TODO: ROOT_URL вынести в отдельный модуль, так, чтобы он был един для всех AJAX запросов.
 const ROOT_URL = '/api';
 
-export function getBase(query) {
+export function getImageList(query) {
     let params = {
         limit: query.limit,
         offset: query.offset,
@@ -18,26 +18,26 @@ export function getBase(query) {
     const baseId = query.baseId;
     const promise = axios({
         method: 'get',
-        url: `${ROOT_URL}/bases/${baseId}`,
+        url: `${ROOT_URL}/images/?base=${baseId}`,
         params,
     });
 
     return {
-        type: GET_BASE,
+        type: GET_IMAGE_LIST,
         payload: { promise, params }
     };
 }
 
-export function getBaseSuccess(response) {
+export function getImageListSuccess(response) {
     return {
-        type: GET_BASE_SUCCESS,
+        type: GET_IMAGE_LIST_SUCCESS,
         payload: response,
     };
 }
 
-export function getBaseError(error) {
+export function getImageListError(error) {
     return {
-        type: GET_BASE_ERROR,
+        type: GET_IMAGE_LIST_ERROR,
         payload: error,
     };
 }

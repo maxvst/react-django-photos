@@ -21,7 +21,6 @@ class ImagePage extends React.Component {
     }
     
     render() {
-        // let params = this.props.match.params;
         return (
             <Image></Image>
         );

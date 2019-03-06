@@ -46,8 +46,8 @@ class BaseListFilter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    request: state.bases.request.params,
-    total: state.bases.response.total
+    request: state.baseList.request.params,
+    total: state.baseList.response.total
 });
 
 const mapDispatchToProps = dispatch => ({
