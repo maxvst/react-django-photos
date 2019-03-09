@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class ImageListItem extends React.Component {
     render() {
-        console.log ('image:', this.props.image)
+        // console.log ('image:', this.props.image)
         // TODO: вынести формирование url в подходящий для этого модуль
         return (
             <img
