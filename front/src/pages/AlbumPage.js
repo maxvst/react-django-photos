@@ -1,9 +1,9 @@
 import React from 'react';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
-import { getBase, getBaseSuccess, getBaseError } from '../actions/BaseActions';
+import { getAlbum, getAlbumSuccess, getAlbumError } from '../actions/AlbumActions';
 import { getImageList, getImageListSuccess, getImageListError } from '../actions/ImageListActions';
-import BaseImageList from '../components/BaseImageList';
+import AlbumImageList from '../components/AlbumImageList';
 import ImageListFilter from '../components/ImageListFilter';
 
 class AlbumPage extends React.Component {
@@ -11,12 +11,12 @@ class AlbumPage extends React.Component {
     // следует именно в методах componentWillReceiveProps и componentWillMount
     componentWillReceiveProps(newProps) {
         this.updateDataAccordingToURL(newProps);
-        // console.log ('eee');
+        console.log ('eee');
     }
 
     componentWillMount() {
         this.updateDataAccordingToURL(this.props);
-        // console.log ('bbb');
+        console.log ('bbb');
     }
 
     // TODO: Вынести логику составления URL в отдельый модуль.
@@ -30,54 +30,51 @@ class AlbumPage extends React.Component {
             pageSize = 10,
             filter = null,
         } = queryString.parse(props.location.search);
-        let baseId = props.match.params.id;
+        let albumId = props.match.params.id;
 
         let query = {
             offset: pageIndex * pageSize,
             limit: pageSize,
             filter,
-            baseId
+            albumId
         };
 
         this.props.setQuery(query);
     }
     
     render() {
-        // console.log ('props: ', this.props);
+        // console.log ('!!!!!props: ', this.props);
         let params = this.props.match.params;
-        // let base = this.props.base;
         // TODO: доавить виджет отображения информации о базе
         return (
             <div>
-                {/* База: { base.id } - { base.name } */}
-                <ImageListFilter baseId={params.id} history={this.props.history}></ImageListFilter>
-                <BaseImageList
+                {/* База: { album.id } - { album.name } */}
+                <ImageListFilter albumId={params.id} history={this.props.history}></ImageListFilter>
+                <AlbumImageList
                     navigateTo={this.navigateToImage}
-                ></BaseImageList>
+                ></AlbumImageList>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        // base: state.base.response
-        // basesPage: state.basePage
-    };
+    return { };
 }
   
 const mapDispatchToProps = (dispatch) => {
     return {
         setQuery: (query) => {
+            console.log('setQuery', query);
             // TODO: при создании нового запроса отменить старый промис, если он еще не выполнен
-            dispatch(getBase(query)).payload.promise.then(
+            dispatch(getAlbum(query)).payload.promise.then(
                 (response) => {
                     !response.error ? 
-                        dispatch(getBaseSuccess(response.data)) : 
-                        dispatch(getBaseError(response.error));
+                        dispatch(getAlbumSuccess(response.data)) : 
+                        dispatch(getAlbumError(response.error));
                 },
                 (error) => {
-                    dispatch(getBaseError(error.response));
+                    dispatch(getAlbumError(error.response));
                 }
             );
             dispatch(getImageList(query)).payload.promise.then(

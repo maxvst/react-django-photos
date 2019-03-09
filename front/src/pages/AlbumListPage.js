@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import BaseList from '../components/BaseList';
-import BaseListFilter from '../components/BaseListFilter';
+import AlbumList from '../components/AlbumList';
+import AlbumListFilter from '../components/AlbumListFilter';
 import queryString from 'query-string';
-import { getBases, getBasesSuccess, getBasesError } from '../actions/BasesActions';
+import { getAlbums, getAlbumsSuccess, getAlbumsError } from '../actions/AlbumsActions';
 
 class AlbumListPage extends React.Component {
     // TODO: Удостовериться, что обновлять данные в соответствии с новым URL
@@ -17,8 +17,8 @@ class AlbumListPage extends React.Component {
     }
 
     // TODO: Вынести логику составления URL в отдельый модуль.
-    navigateToBase = (base) => {
-        this.props.history.push(`/base/${base.id}`);
+    navigateToAlbum = (album) => {
+        this.props.history.push(`/album/${album.id}`);
     }
 
     updateDataAccordingToURL(props) {
@@ -40,10 +40,10 @@ class AlbumListPage extends React.Component {
     render() {
         return (
             <div>
-                <BaseListFilter history={this.props.history}></BaseListFilter>
-                <BaseList
-                    navigateTo={this.navigateToBase}
-                ></BaseList>
+                <AlbumListFilter history={this.props.history}></AlbumListFilter>
+                <AlbumList
+                    navigateTo={this.navigateToAlbum}
+                ></AlbumList>
             </div>
         );
     }
@@ -51,7 +51,7 @@ class AlbumListPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return { 
-        basesPage: state.basesPage
+        albumsPage: state.albumsPage
     };
 }
   
@@ -59,14 +59,14 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setQuery: (query) => {
             // TODO: при создании нового запроса отменить старый промис, если он еще не выполнен
-            dispatch(getBases(query)).payload.promise.then(
+            dispatch(getAlbums(query)).payload.promise.then(
                 (response) => {
                     !response.error ? 
-                        dispatch(getBasesSuccess(response.data)) : 
-                        dispatch(getBasesError(response.error));
+                        dispatch(getAlbumsSuccess(response.data)) : 
+                        dispatch(getAlbumsError(response.error));
                 },
                 (error) => {
-                    dispatch(getBasesError(error.response));
+                    dispatch(getAlbumsError(error.response));
                 }
             );
         }

@@ -2,7 +2,7 @@ import { GET_IMAGE, GET_IMAGE_SUCCESS, GET_IMAGE_ERROR } from '../actions/ImageA
 
 const INITIAL_RESPONSE = {
     id: null,
-    base: null,
+    album: null,
     title: null,
     image: null
 }

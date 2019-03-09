@@ -76,7 +76,7 @@ def image(request, id):
     
     if target == 'description':
         if os.path.isfile(image_path):
-            return JsonResponse({'id': id, 'base_id': dir_name, 'base_name': dir_name, 'title': image_name })
+            return JsonResponse({'id': id, 'album_id': dir_name, 'album_name': dir_name, 'title': image_name })
         return JsonResponse({'error': 'NOT FOUND', 'description': 'Изображение не найдено.'}, status=404)
 
     if target == 'small':
@@ -98,7 +98,7 @@ def image(request, id):
 def images(request):
     # TODO: Переделать эту функцию
     search = request.GET.get('search', None)
-    base_id = request.GET.get('base', None)
+    base_id = request.GET.get('album', None)
     limit = int(request.GET.get('limit', '10'))
     offset = int(request.GET.get('offset', '0'))
 

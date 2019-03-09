@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-class BaseListFilter extends React.Component {
+class AlbumListFilter extends React.Component {
 
     setPageIndex(pageIndex) {
         // TODO: Постараться переписать с использованием <Redirect/>
@@ -46,8 +46,8 @@ class BaseListFilter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    request: state.baseList.request.params,
-    total: state.baseList.response.total
+    request: state.albumList.request.params,
+    total: state.albumList.response.total
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -55,4 +55,4 @@ const mapDispatchToProps = dispatch => ({
     // decrement: () => dispatch(decrement()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BaseListFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumListFilter);

@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-export const GET_BASE = '[Base] Get';
-export const GET_BASE_SUCCESS = '[Base] Get Success';
-export const GET_BASE_ERROR = '[Base] Get Error';
+export const GET_ALBUM = '[Album] Get';
+export const GET_ALBUM_SUCCESS = '[Album] Get Success';
+export const GET_ALBUM_ERROR = '[Album] Get Error';
 
 // TODO: ROOT_URL вынести в отдельный модуль, так, чтобы он был един для всех AJAX запросов.
 const ROOT_URL = '/api';
 
-export function getBase(query) {
+export function getAlbum(query) {
+    console.log ('get album', query);
     let params = {
         limit: query.limit,
         offset: query.offset,
@@ -15,29 +16,29 @@ export function getBase(query) {
     if ('filter' in  query) {
         params.filter = query.filter;
     }
-    const baseId = query.baseId;
+    const albumId = query.albumId;
     const promise = axios({
         method: 'get',
-        url: `${ROOT_URL}/bases/${baseId}`,
+        url: `${ROOT_URL}/albums/${albumId}`,
         params,
     });
 
     return {
-        type: GET_BASE,
+        type: GET_ALBUM,
         payload: { promise, params }
     };
 }
 
-export function getBaseSuccess(response) {
+export function getAlbumSuccess(response) {
     return {
-        type: GET_BASE_SUCCESS,
+        type: GET_ALBUM_SUCCESS,
         payload: response,
     };
 }
 
-export function getBaseError(error) {
+export function getAlbumError(error) {
     return {
-        type: GET_BASE_ERROR,
+        type: GET_ALBUM_ERROR,
         payload: error,
     };
 }

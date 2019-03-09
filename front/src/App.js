@@ -24,7 +24,7 @@ class App extends Component {
               <Link to={'/test'}>Test</Link>
               <Route exact path="/" component={AlbumListPage} />
               <Route path="/test" component={TestPage} />
-              <Route path="/base/:id" component={AlbumPage} />
+              <Route path="/album/:id" component={AlbumPage} />
               <Route path="/image/:id" component={ImagePage} />
           </div>
         </HashRouter >

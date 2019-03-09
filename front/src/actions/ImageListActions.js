@@ -15,10 +15,10 @@ export function getImageList(query) {
     if ('filter' in  query) {
         params.filter = query.filter;
     }
-    const baseId = query.baseId;
+    const albumId = query.albumId;
     const promise = axios({
         method: 'get',
-        url: `${ROOT_URL}/images/?base=${baseId}`,
+        url: `${ROOT_URL}/images/?album=${albumId}`,
         params,
     });
 

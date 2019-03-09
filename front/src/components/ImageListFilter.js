@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-// TODO: Объединить ImageListFilter и BaseListFiler в один компонент
+// TODO: Объединить ImageListFilter и AlbumListFiler в один компонент
 class ImageListFilter extends React.Component {
 
     setPageIndex(pageIndex) {
@@ -16,7 +16,7 @@ class ImageListFilter extends React.Component {
         }
         console.log('this:', this);
         // TODO: Логику составления ссылки вынести в отдельный модуль.
-        this.props.history.push(`/base/${this.props.baseId}/?${queryString.stringify(newRequest)}`);
+        this.props.history.push(`/album/${this.props.albumId}/?${queryString.stringify(newRequest)}`);
     }
 
     render() {
@@ -48,8 +48,8 @@ class ImageListFilter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    request: state.base.request.params,
-    total: state.base.response.total
+    request: state.album.request.params,
+    total: state.album.response.total
 });
 
 const mapDispatchToProps = dispatch => ({

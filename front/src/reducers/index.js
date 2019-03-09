@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
-import baseListReducer from './baseListReducer';
-import baseReducer from './baseReducer';
+import albumListReducer from './albumListReducer';
+import albumReducer from './albumReducer';
 import imageReducer from "./imageReducer";
 import ImageListReducer from "./ImageListReducer";
 
 export default combineReducers({ 
-    baseList: baseListReducer, 
-    base: baseReducer,
+    albumList: albumListReducer, 
+    album: albumReducer,
     image: imageReducer,
     imageList: ImageListReducer
 });

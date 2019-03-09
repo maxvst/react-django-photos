@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export const GET_BASES = '[Bases] Get';
-export const GET_BASES_SUCCESS = '[Bases] Get Success';
-export const GET_BASES_ERROR = '[Bases] Get Error';
+export const GET_ALBUMS = '[Albums] Get';
+export const GET_ALBUMS_SUCCESS = '[Albums] Get Success';
+export const GET_ALBUMS_ERROR = '[Albums] Get Error';
 
 // TODO: ROOT_URL вынести в отдельный модуль, так, чтобы он был един для всех AJAX запросов.
 const ROOT_URL = '/api';
 
-export function getBases(query) {
+export function getAlbums(query) {
     let params = {
         limit: query.limit,
         offset: query.offset,
@@ -17,26 +17,26 @@ export function getBases(query) {
     }
     const promise = axios({
         method: 'get',
-        url: `${ROOT_URL}/bases`,
+        url: `${ROOT_URL}/albums`,
         params,
     });
 
     return {
-        type: GET_BASES,
+        type: GET_ALBUMS,
         payload: { promise, params }
     };
 }
 
-export function getBasesSuccess(response) {
+export function getAlbumsSuccess(response) {
     return {
-        type: GET_BASES_SUCCESS,
+        type: GET_ALBUMS_SUCCESS,
         payload: response,
     };
 }
 
-export function getBasesError(error) {
+export function getAlbumsError(error) {
     return {
-        type: GET_BASES_ERROR,
+        type: GET_ALBUMS_ERROR,
         payload: error,
     };
 }

@@ -1,8 +1,10 @@
-import { GET_BASES, GET_BASES_SUCCESS, GET_BASES_ERROR } from '../actions/BasesActions';
+import { GET_ALBUM, GET_ALBUM_SUCCESS, GET_ALBUM_ERROR } from '../actions/AlbumActions';
 
 const INITIAL_RESPONSE = {
-    result: [],
-    total: 0,
+    id: null,
+    title: null,
+//    result: [],
+//    total: 0,
 }
 
 const INITIAL_STATE = {
@@ -17,11 +19,11 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
     switch(action.type) {
-        case GET_BASES:
+        case GET_ALBUM:
             return { ...state, loading: true, request: action.payload }; 
-        case GET_BASES_SUCCESS:
+        case GET_ALBUM_SUCCESS:
             return { ...state, loading: false, response: action.payload, error: null };
-        case GET_BASES_ERROR:
+        case GET_ALBUM_ERROR:
             return { ...state, loading: false, error: action.payload, response: INITIAL_RESPONSE };
 
         default:

@@ -5,9 +5,9 @@ import './ListItem.css';
 export default class ListItem extends React.Component {
     render() {
         return (
-            <div className="List-item" onClick={() => { this.props.onClick(this.props.base)}}>
-                {/* <Link to={link}>{ this.props.base.title }</Link> */}
-                { this.props.base.title }
+            <div className="List-item" onClick={() => { this.props.onClick(this.props.album)}}>
+                {/* <Link to={link}>{ this.props.album.title }</Link> */}
+                { this.props.album.title }
             </div>
         )
     }
