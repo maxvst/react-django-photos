@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // // import './App.css';
 
-import BaseListPage from './pages/BaseListPage';
+import AlbumListPage from './pages/AlbumListPage';
 import TestPage from './pages/TestPage.js';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -22,7 +22,7 @@ class App extends Component {
           <div>
               <Link to={'/'}>Home</Link>
               <Link to={'/test'}>Test</Link>
-              <Route exact path="/" component={BaseListPage} />
+              <Route exact path="/" component={AlbumListPage} />
               <Route path="/test" component={TestPage} />
               <Route path="/base/:id" component={BasePage} />
               <Route path="/image/:id" component={ImagePage} />

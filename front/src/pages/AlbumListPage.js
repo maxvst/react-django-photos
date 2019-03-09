@@ -5,7 +5,7 @@ import BaseListFilter from '../components/BaseListFilter';
 import queryString from 'query-string';
 import { getBases, getBasesSuccess, getBasesError } from '../actions/BasesActions';
 
-class BaseListPage extends React.Component {
+class AlbumListPage extends React.Component {
     // TODO: Удостовериться, что обновлять данные в соответствии с новым URL
     // следует именно в методах componentWillReceiveProps и componentWillMount
     componentWillReceiveProps(newProps) {
@@ -73,4 +73,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
   
-export default connect(mapStateToProps, mapDispatchToProps)(BaseListPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumListPage);
