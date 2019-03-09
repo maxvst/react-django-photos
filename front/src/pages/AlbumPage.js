@@ -6,7 +6,7 @@ import { getImageList, getImageListSuccess, getImageListError } from '../actions
 import BaseImageList from '../components/BaseImageList';
 import ImageListFilter from '../components/ImageListFilter';
 
-class BasePage extends React.Component {
+class AlbumPage extends React.Component {
     // TODO: Удостовериться, что обновлять данные в соответствии с новым URL
     // следует именно в методах componentWillReceiveProps и componentWillMount
     componentWillReceiveProps(newProps) {
@@ -95,4 +95,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
   
-export default connect(mapStateToProps, mapDispatchToProps)(BasePage);
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);

@@ -5,7 +5,7 @@ import AlbumListPage from './pages/AlbumListPage';
 import TestPage from './pages/TestPage.js';
 import { Provider } from 'react-redux';
 import store from './store';
-import BasePage from './pages/BasePage';
+import AlbumPage from './pages/AlbumPage';
 import ImagePage from './pages/ImagePage';
 
 import {
@@ -24,7 +24,7 @@ class App extends Component {
               <Link to={'/test'}>Test</Link>
               <Route exact path="/" component={AlbumListPage} />
               <Route path="/test" component={TestPage} />
-              <Route path="/base/:id" component={BasePage} />
+              <Route path="/base/:id" component={AlbumPage} />
               <Route path="/image/:id" component={ImagePage} />
           </div>
         </HashRouter >
