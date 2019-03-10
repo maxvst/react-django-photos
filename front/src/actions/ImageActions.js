@@ -10,7 +10,7 @@ const ROOT_URL = '/api';
 export function getImage({imageId}) {
     const promise = axios({
         method: 'get',
-        url: `${ROOT_URL}/images/${imageId}?target=description`,
+        url: `${ROOT_URL}/images/${imageId}/info`,
     });
 
     return {

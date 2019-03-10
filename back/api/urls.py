@@ -7,6 +7,9 @@ urlpatterns = [
     path('', views.index, name='index'),
     url(r'albums/(?P<id>.+)', views.base, name='base'),
     path('albums', views.bases, name='bases'),
-    url(r'images/(?P<id>.+)', views.image, name='image'),
+    url(r'images/(?P<id>.+)/native', views.image_native, name='image'),
+    url(r'images/(?P<id>.+)/info', views.image_info, name='image'),
+    url(r'images/(?P<id>.+)/small', views.image_small, name='image'),
+    # url(r'images/(?P<id>.+)', views.image_native, name='image'),
     url(r'images', views.images, name='images'),
 ]

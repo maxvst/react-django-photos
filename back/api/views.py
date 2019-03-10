@@ -62,38 +62,73 @@ def bases(request):
     
     return JsonResponse({'total': total, 'result': result})
 
-def image(request, id):
+# def image(request, id):
+#     target = request.GET.get('target', 'native')
+#     [dir_name, image_name] = base64.b64decode(id).decode('utf-8').split('/')
+#     image_path = os.path.join(IMAGES_SOURCE, dir_name, image_name)
+
+#     if target == 'native':
+#         # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
+#         # TODO: проверить, что передаются все необходимые заголовки
+#         # TODO: проверить, что закрывается файловый десткриптор
+#         return FileResponse(open(image_path, 'rb'))
     
-    target = request.GET.get('target', 'native')
+#     if target == 'description':
+#         if os.path.isfile(image_path):
+#             return JsonResponse({'id': id, 'album_id': dir_name, 'album_name': dir_name, 'title': image_name })
+#         return JsonResponse({'error': 'NOT FOUND', 'description': 'Изображение не найдено.'}, status=404)
+
+#     if target == 'small':
+#         # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
+#         output = BytesIO()
+#         fd_img = open(image_path, 'rb')
+#         img = Image.open(fd_img)
+#         img = resizeimage.resize_height(img, 100, validate=False)
+#         img.save(output, img.format)
+#         fd_img.close()
+#         mimetype = mimetypes.guess_type(image_name)[0]
+#         # TODO: Изучить, чем отличается FileResponse от HttpResponse при передачи файлов
+#         response = HttpResponse(output.getvalue(), content_type=mimetype)
+#         response['Content-Disposition'] = 'attachment; filename=myfile.jpg'
+#         return response
+    
+#     return JsonResponse({'error': target})
+
+
+def image_native(request, id):
     [dir_name, image_name] = base64.b64decode(id).decode('utf-8').split('/')
     image_path = os.path.join(IMAGES_SOURCE, dir_name, image_name)
 
-    if target == 'native':
-        # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
-        # TODO: проверить, что передаются все необходимые заголовки
-        # TODO: проверить, что закрывается файловый десткриптор
-        return FileResponse(open(image_path, 'rb'))
-    
-    if target == 'description':
-        if os.path.isfile(image_path):
-            return JsonResponse({'id': id, 'album_id': dir_name, 'album_name': dir_name, 'title': image_name })
-        return JsonResponse({'error': 'NOT FOUND', 'description': 'Изображение не найдено.'}, status=404)
+    # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
+    # TODO: проверить, что передаются все необходимые заголовки
+    # TODO: проверить, что закрывается файловый десткриптор
+    return FileResponse(open(image_path, 'rb'))
 
-    if target == 'small':
-        # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
-        output = BytesIO()
-        fd_img = open(image_path, 'rb')
-        img = Image.open(fd_img)
-        img = resizeimage.resize_height(img, 100, validate=False)
-        img.save(output, img.format)
-        fd_img.close()
-        mimetype = mimetypes.guess_type(image_name)[0]
-        # TODO: Изучить, чем отличается FileResponse от HttpResponse при передачи файлов
-        response = HttpResponse(output.getvalue(), content_type=mimetype)
-        response['Content-Disposition'] = 'attachment; filename=myfile.jpg'
-        return response
-    
-    return JsonResponse({'error': target})
+def image_info(request, id):
+    [dir_name, image_name] = base64.b64decode(id).decode('utf-8').split('/')
+    image_path = os.path.join(IMAGES_SOURCE, dir_name, image_name)
+
+    if os.path.isfile(image_path):
+        return JsonResponse({'id': id, 'album_id': dir_name, 'album_name': dir_name, 'title': image_name })
+    return JsonResponse({'error': 'NOT FOUND', 'description': 'Изображение не найдено.'}, status=404)
+
+def image_small(request, id):
+    [dir_name, image_name] = base64.b64decode(id).decode('utf-8').split('/')
+    image_path = os.path.join(IMAGES_SOURCE, dir_name, image_name)
+
+    # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
+    output = BytesIO()
+    fd_img = open(image_path, 'rb')
+    img = Image.open(fd_img)
+    img = resizeimage.resize_height(img, 100, validate=False)
+    img.save(output, img.format)
+    fd_img.close()
+    mimetype = mimetypes.guess_type(image_name)[0]
+    # TODO: Изучить, чем отличается FileResponse от HttpResponse при передачи файлов
+    response = HttpResponse(output.getvalue(), content_type=mimetype)
+    response['Content-Disposition'] = 'attachment; filename=myfile.jpg'
+    return response
+
 
 def images(request):
     # TODO: Переделать эту функцию

@@ -17,7 +17,7 @@ class Image extends React.Component {
                 <h2> База: { image.album } </h2>
                 { image.id && 
                     <img
-                        src={`/api/images/${image.id}?target=native`}
+                        src={`/api/images/${image.id}/native`}
                         alt={image.title}
                     ></img>
                 }
