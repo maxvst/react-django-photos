@@ -112,7 +112,7 @@ def image_info(request, id):
         return JsonResponse({'id': id, 'album_id': dir_name, 'album_name': dir_name, 'title': image_name })
     return JsonResponse({'error': 'NOT FOUND', 'description': 'Изображение не найдено.'}, status=404)
 
-def image_small(request, id):
+def image_preview(request, id):
     [dir_name, image_name] = base64.b64decode(id).decode('utf-8').split('/')
     image_path = os.path.join(IMAGES_SOURCE, dir_name, image_name)
 

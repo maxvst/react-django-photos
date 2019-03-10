@@ -6,7 +6,7 @@ export default class ImageListItem extends React.Component {
         // TODO: вынести формирование url в подходящий для этого модуль
         return (
             <img
-                src={`/api/images/${this.props.image.id}/small`}
+                src={`/api/images/${this.props.image.id}/preview`}
                 alt={this.props.image.title}
                 onClick={() => {this.props.onClick(this.props.image)}}
             ></img>
