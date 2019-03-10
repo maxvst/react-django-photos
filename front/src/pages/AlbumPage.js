@@ -11,12 +11,12 @@ class AlbumPage extends React.Component {
     // следует именно в методах componentWillReceiveProps и componentWillMount
     componentWillReceiveProps(newProps) {
         this.updateDataAccordingToURL(newProps);
-        console.log ('eee');
+        // console.log ('eee');
     }
 
     componentWillMount() {
         this.updateDataAccordingToURL(this.props);
-        console.log ('bbb');
+        // console.log ('bbb');
     }
 
     // TODO: Вынести логику составления URL в отдельый модуль.
@@ -65,7 +65,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setQuery: (query) => {
-            console.log('setQuery', query);
+            // console.log('setQuery', query);
             // TODO: при создании нового запроса отменить старый промис, если он еще не выполнен
             dispatch(getAlbum(query)).payload.promise.then(
                 (response) => {

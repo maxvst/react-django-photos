@@ -8,7 +8,6 @@ export const GET_ALBUM_ERROR = '[Album] Get Error';
 const ROOT_URL = '/api';
 
 export function getAlbum(query) {
-    console.log ('get album', query);
     let params = {
         limit: query.limit,
         offset: query.offset,
