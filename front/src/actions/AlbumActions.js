@@ -18,7 +18,7 @@ export function getAlbum(query) {
     const albumId = query.albumId;
     const promise = axios({
         method: 'get',
-        url: `${ROOT_URL}/albums/${albumId}`,
+        url: `${ROOT_URL}/albums/${albumId}/info`,
         params,
     });
 

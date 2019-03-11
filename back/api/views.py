@@ -17,7 +17,7 @@ from photos.settings import IMAGES_SOURCE
 def index(request):
     return HttpResponse("Hello, world. You're at index.")
 
-def base(request, id):
+def base_info(request, id):
     dir = os.path.join(IMAGES_SOURCE, id)
 
     total_images = seq(os.listdir(dir))\
@@ -72,7 +72,7 @@ def image_preview(request, id):
 
     # # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
     output = BytesIO()
-    
+
     with Image.open(image_path) as img:
         size = 200, 200
         width, height = img.size
