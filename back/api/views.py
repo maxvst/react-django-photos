@@ -14,6 +14,24 @@ from django.http import JsonResponse, HttpResponse, FileResponse, HttpResponseNo
 
 from photos.settings import IMAGES_SOURCE
 
+# TODO: подумать, куда лучше вынести дефолтный размер картинки предварительного просмотра
+size = 200, 200
+
+# TODO: Вынести цвет фона в отдельный модуль.
+background_color = 128, 128, 128
+
+def make_preview_image (img, size):
+    width, height = img.size
+    # # обрзаем картинку до квадратной с сохранением центрирования
+    square_size = min(height, width)
+    left = (width - square_size)/2
+    top = (height - square_size)/2
+    right = (width + square_size)/2
+    bottom = (height + square_size)/2
+    img = img.crop((left, top, right, bottom))
+    img = img.resize(size, Image.ANTIALIAS)
+    return img
+
 def index(request):
     return HttpResponse("Hello, world. You're at index.")
 
@@ -25,6 +43,44 @@ def base_info(request, id):
         .count(lambda filename: True)
         
     return JsonResponse({ 'id': id, 'name': 'id',  'total_images': total_images })
+
+def base_preview(request, id):
+    dir = os.path.join(IMAGES_SOURCE, id)
+    dir_path = os.path.join(IMAGES_SOURCE, dir)
+
+    image_seq = seq(os.listdir(dir_path))\
+        .filter(lambda filename: os.path.isfile(os.path.join(dir, filename)))\
+        .take(4)\
+        .to_list()
+
+    # TODO: Проверить необходимость объявления переменной за перделами нижеследующего if
+    img = None
+    preview_size = list(map(lambda x: int(x/2), size))
+
+    result_img = Image.new('RGB', size, color = background_color)
+    # TODO: Завернуть нижеследующие условия в цикл
+    if len(image_seq) > 0:
+        img = Image.open(os.path.join(dir_path, image_seq[0]))
+        img = make_preview_image(img, preview_size)
+        result_img.paste(img, (0, 0))
+    if len(image_seq) > 1:
+        img = Image.open(os.path.join(dir_path, image_seq[1]))
+        img = make_preview_image(img, preview_size)
+        result_img.paste(img, (int(size[0]/2), 0))
+    if len(image_seq) > 2:
+        img = Image.open(os.path.join(dir_path, image_seq[2]))
+        img = make_preview_image(img, preview_size)
+        result_img.paste(img, (0, int(size[1]/2)))
+    if len(image_seq) > 3:
+        img = Image.open(os.path.join(dir_path, image_seq[3]))
+        img = make_preview_image(img, preview_size)
+        result_img.paste(img, (int(size[0]/2), int(size[1]/2)))
+
+    output = BytesIO()
+    result_img.save(output, "JPEG")
+    response = HttpResponse(output.getvalue(), content_type='image/jpeg')
+    response['Content-Disposition'] = 'attachment; filename=myfile.jpg'
+    return response
 
 def bases(request):
     search = request.GET.get('search', None)
@@ -74,22 +130,12 @@ def image_preview(request, id):
     output = BytesIO()
 
     with Image.open(image_path) as img:
-        size = 200, 200
-        width, height = img.size
-        # # обрзаем картинку до квадратной с сохранением центрирования
-        square_size = min(height, width)
-        left = (width - square_size)/2
-        top = (height - square_size)/2
-        right = (width + square_size)/2
-        bottom = (height + square_size)/2
-
-        img = img.crop((left, top, right, bottom))
-        img = img.resize(size, Image.ANTIALIAS)
-        # img.thumbnail(size)
+        # TODO: Вынести size в отдельный модуль.
+        
+        img = make_preview_image(img, size)
         img.save(output, "JPEG")
 
-        mimetype = mimetypes.guess_type(image_name)[0]
-        response = HttpResponse(output.getvalue(), content_type=mimetype)
+        response = HttpResponse(output.getvalue(), content_type='image/jpeg')
         response['Content-Disposition'] = 'attachment; filename=myfile.jpg'
         return response
 
@@ -108,8 +154,8 @@ def images(request):
 
     dir_path = os.path.join(IMAGES_SOURCE, base_id)
 
-    image_seq = seq(os.listdir(dir_path))#\
-        # .filter(lambda filename: os.path.isfile(os.path.join(dir, filename)))\
+    image_seq = seq(os.listdir(dir_path))\
+        .filter(lambda filename: os.path.isfile(os.path.join(dir_path, filename)))#\
 
     if search is not None:
         regexp = re.compile(search, re.IGNORECASE)
