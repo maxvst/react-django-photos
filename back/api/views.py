@@ -10,7 +10,7 @@ from resizeimage import resizeimage
 from io import BytesIO
 
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse, FileResponse
+from django.http import JsonResponse, HttpResponse, FileResponse, HttpResponseNotFound
 
 from photos.settings import IMAGES_SOURCE
 
@@ -70,19 +70,30 @@ def image_preview(request, id):
     [dir_name, image_name] = base64.b64decode(id).decode('utf-8').split('/')
     image_path = os.path.join(IMAGES_SOURCE, dir_name, image_name)
 
-    # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
+    # # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
     output = BytesIO()
-    fd_img = open(image_path, 'rb')
-    img = Image.open(fd_img)
-    img = resizeimage.resize_height(img, 100, validate=False)
-    img.save(output, img.format)
-    fd_img.close()
-    mimetype = mimetypes.guess_type(image_name)[0]
-    # TODO: Изучить, чем отличается FileResponse от HttpResponse при передачи файлов
-    response = HttpResponse(output.getvalue(), content_type=mimetype)
-    response['Content-Disposition'] = 'attachment; filename=myfile.jpg'
-    return response
+    
+    with Image.open(image_path) as img:
+        size = 200, 200
+        width, height = img.size
+        # # обрзаем картинку до квадратной с сохранением центрирования
+        square_size = min(height, width)
+        left = (width - square_size)/2
+        top = (height - square_size)/2
+        right = (width + square_size)/2
+        bottom = (height + square_size)/2
 
+        img = img.crop((left, top, right, bottom))
+        img = img.resize(size, Image.ANTIALIAS)
+        # img.thumbnail(size)
+        img.save(output, "JPEG")
+
+        mimetype = mimetypes.guess_type(image_name)[0]
+        response = HttpResponse(output.getvalue(), content_type=mimetype)
+        response['Content-Disposition'] = 'attachment; filename=myfile.jpg'
+        return response
+
+    return HttpResponseNotFound('<h1>No Page Here</h1>')
 
 def images(request):
     # TODO: Переделать эту функцию
