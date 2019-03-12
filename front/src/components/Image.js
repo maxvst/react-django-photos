@@ -13,8 +13,8 @@ class Image extends React.Component {
         // TODO: вынести составление URL картинки в соответствующий модуль
         return (
             <div>
-                <h1> Название: { image.title } </h1>
-                <h2> База: { image.album } </h2>
+                <h1> Фото: { image.title } </h1>
+                <h2> Альбом: { image.album_name } </h2>
                 { image.id && 
                     <img
                         src={`/api/images/${image.id}/native`}
