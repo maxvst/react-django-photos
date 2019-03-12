@@ -1,16 +1,27 @@
 import React from 'react';
+import './ImageListItem.css';
+import classNames from 'classnames';
 
 export default class ImageListItem extends React.Component {
     render() {
         // console.log ('image:', this.props.image)
         // TODO: вынести формирование url в подходящий для этого модуль
         return (
-            <img
-                // src={`/api/images/${this.props.image.id}/preview`}
-                src={this.props.image.url}
-                alt={this.props.image.title}
+            <div 
+                className={classNames ("image-list-item", this.props.className)}
                 onClick={() => {this.props.onClick(this.props.image)}}
-            ></img>
+            >
+                <span className="image-label">
+                    <span className="label">{this.props.image.title}</span>
+                </span>
+                <div className="image-container">
+                    <img
+                        className="image"
+                        src={this.props.image.url}
+                        alt={this.props.image.title}
+                    ></img>
+                </div>
+            </div>
         )
     }
 }
