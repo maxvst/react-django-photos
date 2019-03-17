@@ -9,26 +9,36 @@ import AlbumPage from './pages/AlbumPage';
 import ImagePage from './pages/ImagePage';
 
 import {
-    HashRouter,
+    // HashRouter,
+    BrowserRouter as Router,
     Route,
-    Link
+    Link,
+    Switch
 } from 'react-router-dom';
 
 class App extends Component {
+  // TODO: определить лучшую практику вложенности элементов Router и Provider
   render() {
     return (
-      <Provider store={store}>
-        <HashRouter>
-          <div>
-              <Link to={'/'}>Home</Link>
-              <Link to={'/test'}>Test</Link>
-              <Route exact path="/" component={AlbumListPage} />
-              <Route path="/test" component={TestPage} />
-              <Route path="/album/:id" component={AlbumPage} />
-              <Route path="/image/:id" component={ImagePage} />
-          </div>
-        </HashRouter >
-      </Provider>
+      <Router>
+        <Provider store={store}>
+          <Link to={'/'}>Home</Link>
+          <Link to={'/test'}>Test</Link>
+          <Switch>
+            <Route exact path="/" component={AlbumListPage} />
+            <Route path="/test" component={TestPage} />
+            <Route path="/album/:id" component={AlbumPage} />
+            <Route path="/image/:id" component={ImagePage} />
+            <Route render={({ location }) => (
+              <div className='ui inverted red segment'>
+                <h3>
+                  Error! No matches for <code>{location.pathname}</code>
+                </h3>
+              </div>
+            )} />
+          </Switch>        
+        </Provider>
+      </Router>
     );
   }
 }
