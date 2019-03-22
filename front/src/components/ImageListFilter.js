@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import queryString from 'query-string';
 
 // TODO: Объединить ImageListFilter и AlbumListFiler в один компонент
 class ImageListFilter extends React.Component {
 
     setPageIndex(pageIndex) {
-        // TODO: Постараться переписать с использованием <Redirect/>
         let newRequest = { 
             pageIndex: pageIndex,
             pageSize: this.props.request.limit
@@ -14,8 +12,7 @@ class ImageListFilter extends React.Component {
         if (this.props.request.filter) {
             newRequest.filter = this.props.request.filter;
         }
-        // TODO: Логику составления ссылки вынести в отдельный модуль.
-        this.props.history.push(`/album/${this.props.albumId}/?${queryString.stringify(newRequest)}`);
+        this.props.updateRequest(newRequest);
     }
 
     onInputChange = evt => {
@@ -29,10 +26,7 @@ class ImageListFilter extends React.Component {
         // TODO: здесь и в методе выше используется один и тот же код составления запроса.
         // Его необходимо объединить.
         newRequest[evt.target.name] = evt.target.value;
-        // TODO: Вынести редирект с отдельный модуль.
-        // console.log ('newRequest: ', newRequest);
-        this.props.history.push(`/album/${this.props.albumId}/?${queryString.stringify(newRequest)}`);
-        // this.props.history.push('/album?'+queryString.stringify(newRequest));        
+        this.props.updateRequest(newRequest);
     };
 
     render() {

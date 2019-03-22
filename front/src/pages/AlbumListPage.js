@@ -16,16 +16,21 @@ class AlbumListPage extends React.Component {
         this.updateDataAccordingToURL(this.props);
     }
 
-    // TODO: Вынести логику составления URL в отдельый модуль.
+    // TODO: Вынести логику составления URL в отдельный модуль.
     navigateToAlbum = (album) => {
         this.props.history.push(`/album/${album.id}`);
+    }
+
+    updateRequest = (request) => {
+        // TODO: Логику составления ссылки вынести в отдельный модуль.
+        this.props.history.push('/?'+queryString.stringify(request));        
     }
 
     updateDataAccordingToURL(props) {
         let {
             pageIndex = 0,
             pageSize = 10,
-            filter = null
+            filter = ''
         } = queryString.parse(props.location.search);
 
         let query = {
@@ -40,7 +45,7 @@ class AlbumListPage extends React.Component {
     render() {
         return (
             <div>
-                <AlbumListFilter history={this.props.history}></AlbumListFilter>
+                <AlbumListFilter updateRequest={this.updateRequest}></AlbumListFilter>
                 <AlbumList
                     navigateTo={this.navigateToAlbum}
                 ></AlbumList>

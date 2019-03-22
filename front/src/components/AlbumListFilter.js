@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import queryString from 'query-string';
 
 class AlbumListFilter extends React.Component {
 
     setPageIndex(pageIndex) {
-        // TODO: Постараться переписать с использованием <Redirect/>
+        // TODO: Определиться, где должна быть логика составления запроса
         let newRequest = { 
             pageIndex: pageIndex,
             pageSize: this.props.request.limit
@@ -13,9 +12,8 @@ class AlbumListFilter extends React.Component {
         if (this.props.request.filter) {
             newRequest.filter = this.props.request.filter;
         }
-        // TODO: Логику составления ссылки вынести в отдельный модуль.
-        // TODO: Вынести редирект с отдельный модуль.
-        this.props.history.push('/?'+queryString.stringify(newRequest));
+        console.log ('this.props:', this.props);
+        this.props.updateRequest(newRequest);
     }
 
     onInputChange = evt => {
@@ -31,7 +29,8 @@ class AlbumListFilter extends React.Component {
         newRequest[evt.target.name] = evt.target.value;
         // TODO: Вынести редирект с отдельный модуль.
         // console.log ('newRequest: ', newRequest);
-        this.props.history.push('/?'+queryString.stringify(newRequest));        
+        console.log ('this.props:', this.props);
+        this.props.updateRequest(newRequest);
     };
     
 

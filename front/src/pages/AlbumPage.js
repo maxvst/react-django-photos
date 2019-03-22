@@ -11,15 +11,13 @@ class AlbumPage extends React.Component {
     // следует именно в методах componentWillReceiveProps и componentWillMount
     componentWillReceiveProps(newProps) {
         this.updateDataAccordingToURL(newProps);
-        // console.log ('eee');
     }
 
     componentWillMount() {
         this.updateDataAccordingToURL(this.props);
-        // console.log ('bbb');
     }
 
-    // TODO: Вынести логику составления URL в отдельый модуль.
+    // TODO: Вынести логику составления URL в отдельный модуль.
     navigateToImage = (image) => {
         this.props.history.push(`/image/${image.id}`);
     }
@@ -28,7 +26,7 @@ class AlbumPage extends React.Component {
         let {
             pageIndex = 0,
             pageSize = 10,
-            filter = null,
+            filter = '',
         } = queryString.parse(props.location.search);
         let albumId = props.match.params.id;
 
@@ -41,15 +39,19 @@ class AlbumPage extends React.Component {
 
         this.props.setQuery(query);
     }
+
+    updateRequest = (request) => {
+        // TODO: Логику составления ссылки вынести в отдельный модуль.
+        this.props.history.push(`/album/${this.props.match.params.id}/?${queryString.stringify(request)}`);
+    }
     
     render() {
-        // console.log ('!!!!!props: ', this.props);
         let params = this.props.match.params;
-        // TODO: доавить виджет отображения информации о базе
+        // TODO: добавить виджет отображения информации о базе
         return (
             <div>
                 {/* База: { album.id } - { album.name } */}
-                <ImageListFilter albumId={params.id} history={this.props.history}></ImageListFilter>
+                <ImageListFilter updateRequest={this.updateRequest}></ImageListFilter>
                 <AlbumImageList
                     navigateTo={this.navigateToImage}
                 ></AlbumImageList>
@@ -65,7 +67,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setQuery: (query) => {
-            // console.log('setQuery', query);
             // TODO: при создании нового запроса отменить старый промис, если он еще не выполнен
             dispatch(getAlbum(query)).payload.promise.then(
                 (response) => {
