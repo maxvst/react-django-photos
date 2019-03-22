@@ -14,8 +14,26 @@ class AlbumListFilter extends React.Component {
             newRequest.filter = this.props.request.filter;
         }
         // TODO: Логику составления ссылки вынести в отдельный модуль.
+        // TODO: Вынести редирект с отдельный модуль.
         this.props.history.push('/?'+queryString.stringify(newRequest));
     }
+
+    onInputChange = evt => {
+        let newRequest = { 
+            pageIndex: this.props.request.pageIndex,
+            pageSize: this.props.request.limit
+        };
+        if (this.props.request.filter) {
+            newRequest.filter = this.props.request.filter;
+        }
+        // TODO: здесь и в методе выше используется один и тот же код составления запроса.
+        // Его необходимо объединить.
+        newRequest[evt.target.name] = evt.target.value;
+        // TODO: Вынести редирект с отдельный модуль.
+        // console.log ('newRequest: ', newRequest);
+        this.props.history.push('/?'+queryString.stringify(newRequest));        
+    };
+    
 
     render() {
         const params = this.props.request;
@@ -23,7 +41,13 @@ class AlbumListFilter extends React.Component {
         const pageIndex = Math.floor(params.offset/params.limit);
         return (
             <div>
-                <input></input>
+                <input
+                    placeholder="Фильтр"
+                    name="filter"
+                    value={this.props.request.filter}
+                    onChange={this.onInputChange}
+                />
+
                 <button 
                     disabled = { params.offset === 0 }
                     onClick={() => this.setPageIndex(0)}

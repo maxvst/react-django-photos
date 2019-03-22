@@ -83,7 +83,7 @@ def base_preview(request, id):
     return response
 
 def bases(request):
-    search = request.GET.get('search', None)
+    search = request.GET.get('filter', None)
     limit = int(request.GET.get('limit', '10'))
     offset = int(request.GET.get('offset', '0'))
 
@@ -92,7 +92,8 @@ def bases(request):
 
     if search is not None:
         regexp = re.compile(search, re.IGNORECASE)
-        base_seq = bases.filter(lambda filename: regexp.match(filename) is not None)
+        # base_seq = base_seq.filter(lambda filename: regexp.match(filename) is not None)
+        base_seq = base_seq.filter(lambda filename: search in filename)
 
     total = base_seq.count(lambda filename: True)
 
@@ -143,7 +144,7 @@ def image_preview(request, id):
 
 def images(request):
     # TODO: Переделать эту функцию
-    search = request.GET.get('search', None)
+    search = request.GET.get('filter', None)
     base_id = request.GET.get('album', None)
     limit = int(request.GET.get('limit', '10'))
     offset = int(request.GET.get('offset', '0'))
@@ -158,8 +159,8 @@ def images(request):
         .filter(lambda filename: os.path.isfile(os.path.join(dir_path, filename)))#\
 
     if search is not None:
-        regexp = re.compile(search, re.IGNORECASE)
-        image_seq = image_seq.filter(lambda filename: regexp.match(filename) is not None)
+        # regexp = re.compile(search, re.IGNORECASE)
+        image_seq = image_seq.filter(lambda filename: search in filename)
 
     total = image_seq.count(lambda filename: True) 
 

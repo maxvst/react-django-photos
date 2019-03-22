@@ -18,6 +18,7 @@ import {
 
 class App extends Component {
   // TODO: определить лучшую практику вложенности элементов Router и Provider
+  // TODO: вынести отображение ошибочного пути в отдельный компонент.
   render() {
     return (
       <Router>
