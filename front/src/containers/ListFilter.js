@@ -1,6 +1,14 @@
 import React from 'react';
 
-export default class ListFilter extends React.Component {
+// module.exports = class extends React.Component {
+// export default class ListFilter extends React.Component {
+export default class extends React.Component {    
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { filter: '' };
+    // }
+
+    state = { filter: '' };
 
     setPageIndex(pageIndex) {
         let newRequest = { 
@@ -13,7 +21,13 @@ export default class ListFilter extends React.Component {
         this.props.updateRequest(newRequest);
     }
 
-    onInputChange = evt => {
+    static getDerivedStateFromProps(props) {
+        // TODO: найти причину, по которой props.request.filter может передаваться сюда неопределенным.
+        // TODO: исправить эту ситуацию.
+        return { filter: props.request.filter || '' };
+    }
+
+    onFilterChange = evt => {
         let newRequest = { 
             pageIndex: this.props.request.pageIndex,
             pageSize: this.props.request.limit
@@ -23,7 +37,7 @@ export default class ListFilter extends React.Component {
         }
         // TODO: здесь и в методе выше используется один и тот же код составления запроса.
         // Его необходимо объединить.
-        newRequest[evt.target.name] = evt.target.value;
+        newRequest['filter'] = evt.target.value;
         this.props.updateRequest(newRequest);
     };
 
@@ -35,9 +49,8 @@ export default class ListFilter extends React.Component {
             <div>
                 <input
                     placeholder="Фильтр"
-                    name="filter"
-                    value={this.props.request.filter}
-                    onChange={this.onInputChange}
+                    value={this.state.filter}
+                    onChange={this.onFilterChange}
                 />
 
                 <button 
