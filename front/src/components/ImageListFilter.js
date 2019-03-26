@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import ListFilter from '../containers/ListFilter'
 
 const mapStateToProps = state => ({
-    request: state.album.request.params,
-    total: state.album.response.total
+    request: state.imageList.request.params,
+    total: state.imageList.response.total
 });
 
 const mapDispatchToProps = dispatch => ({

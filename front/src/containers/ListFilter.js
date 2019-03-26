@@ -56,6 +56,8 @@ export default class extends React.Component {
         const params = this.props.request;
         const total = this.props.total;
         const pageIndex = Math.floor(params.offset/params.limit);
+        const forwardButtonDisabled = !(params.offset + params.limit < total);
+        const backButtonDisabled = !(params.offset > 0);
         return (
             <div>
                 <input
@@ -65,19 +67,19 @@ export default class extends React.Component {
                 />
 
                 <button 
-                    disabled = { params.offset === 0 }
+                    disabled = { backButtonDisabled }
                     onClick={() => this.setPageIndex(0)}
                 > В начало </button>
                 <button 
-                    disabled = {params.offset === 0}
+                    disabled = { backButtonDisabled }
                     onClick={() => this.setPageIndex(pageIndex - 1)}
                 > Назад </button>
                 <button 
-                    disabled = {params.offset + params.limit >= total}
+                    disabled = { forwardButtonDisabled }
                     onClick={() => this.setPageIndex(pageIndex + 1)}
                 > Вперед </button>
                 <button 
-                    disabled = {params.offset + params.limit >= total}
+                    disabled = { forwardButtonDisabled }
                     onClick={() => this.setPageIndex(Math.floor(total/params.limit))}
                 > В конец </button>
             </div>
