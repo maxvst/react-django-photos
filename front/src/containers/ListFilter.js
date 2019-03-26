@@ -2,7 +2,10 @@ import React from 'react';
 import debounce from '../misc/debounce';
 
 export default class extends React.Component {    
-    state = { filter: '' };
+    state = {
+        filter: '',
+        lastFilterFromProps: ''
+    };
 
     setPageIndex(pageIndex) {
         let newRequest = { 
@@ -15,20 +18,20 @@ export default class extends React.Component {
         this.props.updateRequest(newRequest);
     }
 
-    // static getDerivedStateFromProps(props) {
-    getInitialState (props) {
-        // TODO: getInitialState не может обновить state, после инициализации компонента
-        // при изменении props. Нужно найти способ обновления state так, чтобы он не флудил как
-        // случае с getDerivedStateFromProps
-        // Можно сравнивать новые пришедшие данные со старыми и блокировать Render(), 
-        // если в действительности нет обновлений
-        // изучить https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
-        // TODO: найти причину, по которой props.request.filter может передаваться сюда неопределенным.
-        // TODO: исправить эту ситуацию.
-        console.log ('update state from props:', props);
-        return { filter: props.request.filter || '' };
+    // getInitialState (props) {
+    static getDerivedStateFromProps(props, state) {
+        const filter = props.request.filter || '';
+        if (filter !== state.lastFilterFromProps) {
+            console.log ('update state:', props)
+            return {
+                filter,
+                lastFilterFromProps: filter
+            };
+        }
+        console.log ('nothing to update', props);
+        return null;
     }
-
+    
     onFilterChange = (evt) => {
         const newState = {...this.state, filter: evt.target.value};
         this.setState(newState, () => { /* console.log ('state set: ', this.state)*/ });
@@ -36,7 +39,6 @@ export default class extends React.Component {
     }
 
     filterDebounce = debounce(value => {
-        // console.log ('debounce fired with value');
             let newRequest = { 
                 pageIndex: this.props.request.pageIndex,
                 pageSize: this.props.request.limit
@@ -44,13 +46,15 @@ export default class extends React.Component {
             if (this.props.request.filter) {
                 newRequest.filter = this.props.request.filter;
             }
-            // TODO: здесь и в методе выше используется один и тот же код составления запроса.
+            // TODO: здесь и в методе setPageIndex используется один и тот же код составления запроса.
             // Его необходимо объединить.
             newRequest['filter'] = this.state.filter;
             this.props.updateRequest(newRequest);
     }, 500);
 
     render() {
+        // TODO: Render вызывается слишком много раз при первичном отображении страницы.
+        // изучить, как можно уменьшить количество.
         const params = this.props.request;
         const total = this.props.total;
         const pageIndex = Math.floor(params.offset/params.limit);
