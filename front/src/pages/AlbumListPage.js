@@ -49,6 +49,7 @@ class AlbumListPage extends React.Component {
                 <AlbumList
                     navigateTo={this.navigateToAlbum}
                 ></AlbumList>
+                <AlbumListFilter updateRequest={this.updateRequest}></AlbumListFilter>
             </div>
         );
     }

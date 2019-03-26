@@ -55,6 +55,7 @@ class AlbumPage extends React.Component {
                 <AlbumImageList
                     navigateTo={this.navigateToImage}
                 ></AlbumImageList>
+                <ImageListFilter updateRequest={this.updateRequest}></ImageListFilter>
             </div>
         );
     }
