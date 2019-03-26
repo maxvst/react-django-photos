@@ -22,19 +22,17 @@ export default class extends React.Component {
     static getDerivedStateFromProps(props, state) {
         const filter = props.request.filter || '';
         if (filter !== state.lastFilterFromProps) {
-            console.log ('update state:', props)
             return {
                 filter,
                 lastFilterFromProps: filter
             };
         }
-        console.log ('nothing to update', props);
         return null;
     }
     
     onFilterChange = (evt) => {
         const newState = {...this.state, filter: evt.target.value};
-        this.setState(newState, () => { /* console.log ('state set: ', this.state)*/ });
+        this.setState(newState);
         this.filterDebounce(evt.target.value);
     }
 
