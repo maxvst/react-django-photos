@@ -1,14 +1,7 @@
 import React from 'react';
 import debounce from '../misc/debounce';
 
-// module.exports = class extends React.Component {
-// export default class ListFilter extends React.Component {
 export default class extends React.Component {    
-    // constructor(props) {
-    //     super(props);
-    //     this.state = { filter: '' };
-    // }
-
     state = { filter: '' };
 
     setPageIndex(pageIndex) {
@@ -27,6 +20,8 @@ export default class extends React.Component {
         // TODO: getInitialState не может обновить state, после инициализации компонента
         // при изменении props. Нужно найти способ обновления state так, чтобы он не флудил как
         // случае с getDerivedStateFromProps
+        // Можно сравнивать новые пришедшие данные со старыми и блокировать Render(), 
+        // если в действительности нет обновлений
         // изучить https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
         // TODO: найти причину, по которой props.request.filter может передаваться сюда неопределенным.
         // TODO: исправить эту ситуацию.
@@ -34,19 +29,9 @@ export default class extends React.Component {
         return { filter: props.request.filter || '' };
     }
 
-    onFilterChange2 = evt => {
-        // console.log ('onFilterChangeStart with value:', evt.target.value);
-        const newState = {...this.state, filter: evt.target.value};
-        // console.log ('setting new state:', newState);
-        this.setState(newState, () => { console.log ('state set: ', this.state)});
-    };
-
     onFilterChange = (evt) => {
-        // console.log ('onFilterChangeStart with value:', evt.target.value);
         const newState = {...this.state, filter: evt.target.value};
-        // console.log ('setting new state:', newState);
         this.setState(newState, () => { /* console.log ('state set: ', this.state)*/ });
-        // console.log ('start debounce');
         this.filterDebounce(evt.target.value);
     }
 
