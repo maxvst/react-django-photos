@@ -16,9 +16,16 @@ const INITIAL_STATE = {
 }
 
 export default function(state = INITIAL_STATE, action) {
+
     switch(action.type) {
+
         case GET_ALBUMS:
-            return { ...state, loading: true, request: action.payload }; 
+            return { 
+                ...state, 
+                loading: true, 
+                request: action.payload,
+                response: (action.payload.clearData) ? INITIAL_RESPONSE : state.response
+            }; 
         case GET_ALBUMS_SUCCESS:
             const response = action.payload;
             response.result = response.result.map(
