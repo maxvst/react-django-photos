@@ -19,7 +19,11 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
     switch(action.type) {
         case GET_IMAGE:
-            return { ...state, loading: true, request: action.payload }; 
+            return { 
+                ...state,loading: true,
+                request: action.payload,
+                response: (action.payload.clearData) ? INITIAL_RESPONSE : state.response
+            }; 
         case GET_IMAGE_SUCCESS:
             return { ...state, loading: false, response: action.payload, error: null };
         case GET_IMAGE_ERROR:

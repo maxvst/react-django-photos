@@ -7,7 +7,7 @@ export const GET_IMAGE_ERROR = '[Image] Get Error';
 // TODO: ROOT_URL вынести в отдельный модуль, так, чтобы он был един для всех AJAX запросов.
 const ROOT_URL = '/api';
 
-export function getImage({imageId}) {
+export function getImage({imageId}, {clearData}) {
     const promise = axios({
         method: 'get',
         url: `${ROOT_URL}/images/${imageId}/info`,
@@ -15,7 +15,7 @@ export function getImage({imageId}) {
 
     return {
         type: GET_IMAGE,
-        payload: { promise, imageId },
+        payload: { promise, imageId, clearData },
     };
 }
 
