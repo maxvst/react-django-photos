@@ -7,7 +7,7 @@ export const GET_ALBUM_ERROR = '[Album] Get Error';
 // TODO: ROOT_URL вынести в отдельный модуль, так, чтобы он был един для всех AJAX запросов.
 const ROOT_URL = '/api';
 
-export function getAlbum(query) {
+export function getAlbum(query, {clearData}) {
     let params = {
         limit: query.limit,
         offset: query.offset,
@@ -24,7 +24,7 @@ export function getAlbum(query) {
 
     return {
         type: GET_ALBUM,
-        payload: { promise, params }
+        payload: { promise, params, clearData }
     };
 }
 

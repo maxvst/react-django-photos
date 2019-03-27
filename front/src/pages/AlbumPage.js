@@ -10,11 +10,11 @@ class AlbumPage extends React.Component {
     // TODO: Удостовериться, что обновлять данные в соответствии с новым URL
     // следует именно в методах componentWillReceiveProps и componentWillMount
     componentWillReceiveProps(newProps) {
-        this.updateDataAccordingToURL(newProps);
+        this.updateDataAccordingToURL(newProps, {clearData: false});
     }
 
     componentWillMount() {
-        this.updateDataAccordingToURL(this.props);
+        this.updateDataAccordingToURL(this.props, {clearData: true});
     }
 
     // TODO: Вынести логику составления URL в отдельный модуль.
@@ -22,7 +22,7 @@ class AlbumPage extends React.Component {
         this.props.history.push(`/image/${image.id}`);
     }
 
-    updateDataAccordingToURL(props) {
+    updateDataAccordingToURL(props, options) {
         let {
             pageIndex = 0,
             pageSize = 10,
@@ -37,7 +37,7 @@ class AlbumPage extends React.Component {
             albumId
         };
 
-        this.props.setQuery(query);
+        this.props.setQuery(query, options);
     }
 
     updateRequest = (request) => {
@@ -67,9 +67,9 @@ const mapStateToProps = (state) => {
   
 const mapDispatchToProps = (dispatch) => {
     return {
-        setQuery: (query) => {
+        setQuery: (query, options) => {
             // TODO: при создании нового запроса отменить старый промис, если он еще не выполнен
-            dispatch(getAlbum(query)).payload.promise.then(
+            dispatch(getAlbum(query, options)).payload.promise.then(
                 (response) => {
                     !response.error ? 
                         dispatch(getAlbumSuccess(response.data)) : 
