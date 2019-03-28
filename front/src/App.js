@@ -9,7 +9,6 @@ import AlbumPage from './pages/AlbumPage';
 import ImagePage from './pages/ImagePage';
 
 import {
-    // HashRouter,
     BrowserRouter as Router,
     Route,
     Link,
@@ -17,7 +16,6 @@ import {
 } from 'react-router-dom';
 
 class App extends Component {
-  // TODO: определить лучшую практику вложенности элементов Router и Provider
   // TODO: вынести отображение ошибочного пути в отдельный компонент.
   render() {
     return (

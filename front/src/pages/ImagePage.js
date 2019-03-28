@@ -1,5 +1,4 @@
 import React from 'react';
-// import queryString from 'query-string';
 import { connect } from 'react-redux';
 import { getImage, getImageSuccess, getImageError } from '../actions/ImageActions';
 import Image from '../components/Image.js';

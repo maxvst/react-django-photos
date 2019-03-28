@@ -3,8 +3,6 @@ import { GET_ALBUM, GET_ALBUM_SUCCESS, GET_ALBUM_ERROR } from '../actions/AlbumA
 const INITIAL_RESPONSE = {
     id: null,
     title: null,
-//    result: [],
-//    total: 0,
 }
 
 const INITIAL_STATE = {

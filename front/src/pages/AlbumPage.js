@@ -46,7 +46,6 @@ class AlbumPage extends React.Component {
     }
     
     render() {
-        // let params = this.props.match.params;
         // TODO: добавить виджет отображения информации о базе
         return (
             <div>
