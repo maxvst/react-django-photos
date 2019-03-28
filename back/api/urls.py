@@ -11,6 +11,5 @@ urlpatterns = [
     url(r'images/(?P<id>.+)/native', views.image_native, name='image'),
     url(r'images/(?P<id>.+)/info', views.image_info, name='image'),
     url(r'images/(?P<id>.+)/preview', views.image_preview, name='image'),
-    # url(r'images/(?P<id>.+)', views.image_native, name='image'),
     url(r'images', views.images, name='images'),
 ]

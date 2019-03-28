@@ -22,7 +22,7 @@ background_color = 128, 128, 128
 
 def make_preview_image (img, size):
     width, height = img.size
-    # # обрзаем картинку до квадратной с сохранением центрирования
+    # обрзаем картинку до квадратной с сохранением центрирования
     square_size = min(height, width)
     left = (width - square_size)/2
     top = (height - square_size)/2
@@ -53,12 +53,10 @@ def base_preview(request, id):
         .take(4)\
         .to_list()
 
-    # TODO: Проверить необходимость объявления переменной за перделами нижеследующего if
     img = None
     preview_size = list(map(lambda x: int(x/2), size))
 
     result_img = Image.new('RGB', size, color = background_color)
-    # TODO: Завернуть нижеследующие условия в цикл
     if len(image_seq) > 0:
         img = Image.open(os.path.join(dir_path, image_seq[0]))
         img = make_preview_image(img, preview_size)
@@ -92,7 +90,6 @@ def bases(request):
 
     if search is not None:
         regexp = re.compile(search, re.IGNORECASE)
-        # base_seq = base_seq.filter(lambda filename: regexp.match(filename) is not None)
         base_seq = base_seq.filter(lambda filename: search in filename)
 
     total = base_seq.count(lambda filename: True)
@@ -112,7 +109,6 @@ def image_native(request, id):
 
     # TODO: обработать ситуацию, при которой отсутствует файл или нет прав на его открытие
     # TODO: проверить, что передаются все необходимые заголовки
-    # TODO: проверить, что закрывается файловый десткриптор
     return FileResponse(open(image_path, 'rb'))
 
 def image_info(request, id):
@@ -143,7 +139,6 @@ def image_preview(request, id):
     return HttpResponseNotFound('<h1>No Page Here</h1>')
 
 def images(request):
-    # TODO: Переделать эту функцию
     search = request.GET.get('filter', None)
     base_id = request.GET.get('album', None)
     limit = int(request.GET.get('limit', '10'))
@@ -151,7 +146,7 @@ def images(request):
 
     if (base_id is None):
         # TODO: Вернуть нормальную ошибку
-        return JsonResponse({'result1': []})
+        return JsonResponse({'result': []})
 
     dir_path = os.path.join(IMAGES_SOURCE, base_id)
 
@@ -159,7 +154,6 @@ def images(request):
         .filter(lambda filename: os.path.isfile(os.path.join(dir_path, filename)))#\
 
     if search is not None:
-        # regexp = re.compile(search, re.IGNORECASE)
         image_seq = image_seq.filter(lambda filename: search in filename)
 
     total = image_seq.count(lambda filename: True) 
@@ -174,5 +168,4 @@ def images(request):
         })\
         .to_list()
 
-    # image_text = base64.b64encode(byte_content).decode('utf-8')
     return JsonResponse({ 'total': total, 'result': result })
