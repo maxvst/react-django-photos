@@ -31,3 +31,6 @@ cd front
 npm install
 npm start
 ```
+
+Перейти в любимом браузере по адресу 
+`http://localhost:3000/`
